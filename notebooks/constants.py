@@ -1,0 +1,3 @@
+SECONDS_PER_DAY = 86_400
+CLIMATES = ["1xCO2", "2xCO2", "3xCO2", "4xCO2"]
+TIME_MEAN_DIAGNOSTICS_PATH = "time_mean_diagnostics.nc"
