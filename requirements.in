@@ -1,0 +1,23 @@
+beaker-py
+bokeh>=3.1.0
+cartopy
+cftime
+dask
+distributed
+faceted
+fsspec
+gcsfs
+h5netcdf
+ipywidgets
+jupyterlab
+matplotlib
+netCDF4
+numpy==1.26.3
+scipy
+seaborn
+universal_pathlib
+wandb
+xarray
+xesmf
+zarr
+vcm @ git+https://github.com/ai2cm/fv3net.git@68e4f378e933a9d90af9268a4f330cd6fc308e7d#egg=vcm&subdirectory=external/vcm
