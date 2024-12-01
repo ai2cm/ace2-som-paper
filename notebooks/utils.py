@@ -204,7 +204,7 @@ def load_time_mean_spatial_patterns(
 
 
 def open_catalog():
-    return pd.read_csv("../scripts/inference-run-catalog-final.csv")
+    return pd.read_csv("../scripts/inference-run-catalog.csv")
 
 
 def compute_bias(ds, dim, reference):
