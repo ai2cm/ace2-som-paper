@@ -1,0 +1,8 @@
+checkpoint_path: /ckpt.tar
+data_writer:
+  save_monthly_files: false
+  save_prediction_files: false
+experiment_dir: /output
+forward_steps_in_memory: 40
+logging:
+  project: ace-som
