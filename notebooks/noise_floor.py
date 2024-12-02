@@ -46,7 +46,7 @@ def compute_delp(surface_pressure):
 
 def compute_standard_ace_levels():
     ak, bk = load_vertical_coordinate()
-    standard_delp = (ak + 100_000 * bk).diff("pfull")
+    standard_delp = (ak + np.float32(100_000) * bk).diff("pfull")
     standard_pressure = vcm.pressure_at_midpoint_log(
         standard_delp, toa_pressure=ak.isel(pfull=0), dim="pfull"
     )
