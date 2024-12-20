@@ -10,3 +10,4 @@ manuscript_figures:
 	jupyter nbconvert --execute --to notebook --inplace metric-summary.ipynb
 	jupyter nbconvert --execute --to notebook --inplace figure-11.ipynb
 	jupyter nbconvert --execute --to notebook --inplace figure-12.ipynb
+	jupyter nbconvert --execute --to notebook --inplace figure-S01.ipynb
