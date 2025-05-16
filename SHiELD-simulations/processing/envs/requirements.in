@@ -1,0 +1,10 @@
+cftime
+h5py
+kerchunk
+netCDF4
+pytest
+scipy
+snakemake
+snakemake-executor-plugin-cluster-generic
+xpartition
+xtorch_harmonics @ git+https://github.com/ai2cm/fv3net.git@68e4f378e933a9d90af9268a4f330cd6fc308e7d#egg=xtorch_harmonics&subdirectory=external/xtorch_harmonics

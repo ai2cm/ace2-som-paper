@@ -1,0 +1,114 @@
+config_name: 2024-11-11-SHiELD-SOM-C24-tuned-cdmbgwd-simulations
+
+# Directories for storing output
+# output_directory is for storing final products
+# working_directory is for storing any temporary intermediates
+# gcs_bucket is the root directory for any data uploaded to Google Cloud Storage
+archive_directory: /archive/Spencer.Clark/2024-11-11-C24-SHiELD-SOM-tuned-cdmbgwd
+output_directory: /gpfs/f5/gfdl_w/scratch/Spencer.Clark/scratch/2024-11-11-C24-SHiELD-SOM-tuned-cdmbgwd-post-processing
+working_directory: /gpfs/f5/gfdl_w/scratch/Spencer.Clark/scratch/2024-11-11-C24-SHiELD-SOM-tuned-cdmbgwd-post-processing/work
+gcs_bucket: gs://vcm-ml-raw-flexible-retention/2024-11-11-C24-SHiELD-SOM-tuned-cdmbgwd
+
+# runs: a mapping from run names (for use in wildcards) to paths to run
+# directories.
+runs:
+  # Note we manually split the equilibrium climate ensemble runs into spin-up and main
+  # portions using symlinks. The spin-up phase is one-year long, and the main phase is
+  # ten years long.
+  1xCO2-ic_0001: /gpfs/f5/gfdl_w/scratch/Spencer.Clark/scratch/2024-11-11-reference-SHiELD-runs-links/slab-ocean-1xCO2-main-C24-tuned-cdmbgwd-ic_0001
+  1xCO2-ic_0002: /gpfs/f5/gfdl_w/scratch/Spencer.Clark/scratch/2024-11-11-reference-SHiELD-runs-links/slab-ocean-1xCO2-main-C24-tuned-cdmbgwd-ic_0002
+  1xCO2-ic_0003: /gpfs/f5/gfdl_w/scratch/Spencer.Clark/scratch/2024-11-11-reference-SHiELD-runs-links/slab-ocean-1xCO2-main-C24-tuned-cdmbgwd-ic_0003
+  1xCO2-ic_0004: /gpfs/f5/gfdl_w/scratch/Spencer.Clark/scratch/2024-11-11-reference-SHiELD-runs-links/slab-ocean-1xCO2-main-C24-tuned-cdmbgwd-ic_0004
+  1xCO2-ic_0005: /gpfs/f5/gfdl_w/scratch/Spencer.Clark/scratch/2024-11-11-reference-SHiELD-runs-links/slab-ocean-1xCO2-main-C24-tuned-cdmbgwd-ic_0005
+  2xCO2-ic_0001: /gpfs/f5/gfdl_w/scratch/Spencer.Clark/scratch/2024-11-11-reference-SHiELD-runs-links/slab-ocean-2xCO2-main-C24-tuned-cdmbgwd-ic_0001
+  2xCO2-ic_0002: /gpfs/f5/gfdl_w/scratch/Spencer.Clark/scratch/2024-11-11-reference-SHiELD-runs-links/slab-ocean-2xCO2-main-C24-tuned-cdmbgwd-ic_0002
+  2xCO2-ic_0003: /gpfs/f5/gfdl_w/scratch/Spencer.Clark/scratch/2024-11-11-reference-SHiELD-runs-links/slab-ocean-2xCO2-main-C24-tuned-cdmbgwd-ic_0003
+  2xCO2-ic_0004: /gpfs/f5/gfdl_w/scratch/Spencer.Clark/scratch/2024-11-11-reference-SHiELD-runs-links/slab-ocean-2xCO2-main-C24-tuned-cdmbgwd-ic_0004
+  2xCO2-ic_0005: /gpfs/f5/gfdl_w/scratch/Spencer.Clark/scratch/2024-11-11-reference-SHiELD-runs-links/slab-ocean-2xCO2-main-C24-tuned-cdmbgwd-ic_0005
+  3xCO2-ic_0001: /gpfs/f5/gfdl_w/scratch/Spencer.Clark/scratch/2024-11-11-reference-SHiELD-runs-links/slab-ocean-3xCO2-main-C24-tuned-cdmbgwd-ic_0001
+  3xCO2-ic_0002: /gpfs/f5/gfdl_w/scratch/Spencer.Clark/scratch/2024-11-11-reference-SHiELD-runs-links/slab-ocean-3xCO2-main-C24-tuned-cdmbgwd-ic_0002
+  3xCO2-ic_0003: /gpfs/f5/gfdl_w/scratch/Spencer.Clark/scratch/2024-11-11-reference-SHiELD-runs-links/slab-ocean-3xCO2-main-C24-tuned-cdmbgwd-ic_0003
+  3xCO2-ic_0004: /gpfs/f5/gfdl_w/scratch/Spencer.Clark/scratch/2024-11-11-reference-SHiELD-runs-links/slab-ocean-3xCO2-main-C24-tuned-cdmbgwd-ic_0004
+  3xCO2-ic_0005: /gpfs/f5/gfdl_w/scratch/Spencer.Clark/scratch/2024-11-11-reference-SHiELD-runs-links/slab-ocean-3xCO2-main-C24-tuned-cdmbgwd-ic_0005
+  4xCO2-ic_0001: /gpfs/f5/gfdl_w/scratch/Spencer.Clark/scratch/2024-11-11-reference-SHiELD-runs-links/slab-ocean-4xCO2-main-C24-tuned-cdmbgwd-ic_0001
+  4xCO2-ic_0002: /gpfs/f5/gfdl_w/scratch/Spencer.Clark/scratch/2024-11-11-reference-SHiELD-runs-links/slab-ocean-4xCO2-main-C24-tuned-cdmbgwd-ic_0002
+  4xCO2-ic_0003: /gpfs/f5/gfdl_w/scratch/Spencer.Clark/scratch/2024-11-11-reference-SHiELD-runs-links/slab-ocean-4xCO2-main-C24-tuned-cdmbgwd-ic_0003
+  4xCO2-ic_0004: /gpfs/f5/gfdl_w/scratch/Spencer.Clark/scratch/2024-11-11-reference-SHiELD-runs-links/slab-ocean-4xCO2-main-C24-tuned-cdmbgwd-ic_0004
+  4xCO2-ic_0005: /gpfs/f5/gfdl_w/scratch/Spencer.Clark/scratch/2024-11-11-reference-SHiELD-runs-links/slab-ocean-4xCO2-main-C24-tuned-cdmbgwd-ic_0005
+  abrupt-2xCO2: /gpfs/f5/gfdl_w/scratch/Spencer.Clark/scratch/2024-10-21-reference-SHiELD-runs/slab-ocean-spin-up-2xCO2-C24-tuned-cdmbgwd
+  abrupt-3xCO2: /gpfs/f5/gfdl_w/scratch/Spencer.Clark/scratch/2024-10-21-reference-SHiELD-runs/slab-ocean-spin-up-3xCO2-C24-tuned-cdmbgwd
+  abrupt-4xCO2: /gpfs/f5/gfdl_w/scratch/Spencer.Clark/scratch/2024-10-21-reference-SHiELD-runs/slab-ocean-spin-up-4xCO2-C24-tuned-cdmbgwd
+  increasing-CO2: /gpfs/f5/gfdl_w/scratch/Spencer.Clark/scratch/2024-11-11-reference-SHiELD-runs-links/slab-ocean-increasing-CO2-main-C24-tuned-cdmbgwd
+  1xCO2-spin-up-ic_0001: /gpfs/f5/gfdl_w/scratch/Spencer.Clark/scratch/2024-11-11-reference-SHiELD-runs-links/slab-ocean-1xCO2-spin-up-C24-tuned-cdmbgwd-ic_0001
+  1xCO2-spin-up-ic_0002: /gpfs/f5/gfdl_w/scratch/Spencer.Clark/scratch/2024-11-11-reference-SHiELD-runs-links/slab-ocean-1xCO2-spin-up-C24-tuned-cdmbgwd-ic_0002
+  1xCO2-spin-up-ic_0003: /gpfs/f5/gfdl_w/scratch/Spencer.Clark/scratch/2024-11-11-reference-SHiELD-runs-links/slab-ocean-1xCO2-spin-up-C24-tuned-cdmbgwd-ic_0003
+  1xCO2-spin-up-ic_0004: /gpfs/f5/gfdl_w/scratch/Spencer.Clark/scratch/2024-11-11-reference-SHiELD-runs-links/slab-ocean-1xCO2-spin-up-C24-tuned-cdmbgwd-ic_0004
+  1xCO2-spin-up-ic_0005: /gpfs/f5/gfdl_w/scratch/Spencer.Clark/scratch/2024-11-11-reference-SHiELD-runs-links/slab-ocean-1xCO2-spin-up-C24-tuned-cdmbgwd-ic_0005
+  2xCO2-spin-up-ic_0001: /gpfs/f5/gfdl_w/scratch/Spencer.Clark/scratch/2024-11-11-reference-SHiELD-runs-links/slab-ocean-2xCO2-spin-up-C24-tuned-cdmbgwd-ic_0001
+  2xCO2-spin-up-ic_0002: /gpfs/f5/gfdl_w/scratch/Spencer.Clark/scratch/2024-11-11-reference-SHiELD-runs-links/slab-ocean-2xCO2-spin-up-C24-tuned-cdmbgwd-ic_0002
+  2xCO2-spin-up-ic_0003: /gpfs/f5/gfdl_w/scratch/Spencer.Clark/scratch/2024-11-11-reference-SHiELD-runs-links/slab-ocean-2xCO2-spin-up-C24-tuned-cdmbgwd-ic_0003
+  2xCO2-spin-up-ic_0004: /gpfs/f5/gfdl_w/scratch/Spencer.Clark/scratch/2024-11-11-reference-SHiELD-runs-links/slab-ocean-2xCO2-spin-up-C24-tuned-cdmbgwd-ic_0004
+  2xCO2-spin-up-ic_0005: /gpfs/f5/gfdl_w/scratch/Spencer.Clark/scratch/2024-11-11-reference-SHiELD-runs-links/slab-ocean-2xCO2-spin-up-C24-tuned-cdmbgwd-ic_0005
+  3xCO2-spin-up-ic_0001: /gpfs/f5/gfdl_w/scratch/Spencer.Clark/scratch/2024-11-11-reference-SHiELD-runs-links/slab-ocean-3xCO2-spin-up-C24-tuned-cdmbgwd-ic_0001
+  3xCO2-spin-up-ic_0002: /gpfs/f5/gfdl_w/scratch/Spencer.Clark/scratch/2024-11-11-reference-SHiELD-runs-links/slab-ocean-3xCO2-spin-up-C24-tuned-cdmbgwd-ic_0002
+  3xCO2-spin-up-ic_0003: /gpfs/f5/gfdl_w/scratch/Spencer.Clark/scratch/2024-11-11-reference-SHiELD-runs-links/slab-ocean-3xCO2-spin-up-C24-tuned-cdmbgwd-ic_0003
+  3xCO2-spin-up-ic_0004: /gpfs/f5/gfdl_w/scratch/Spencer.Clark/scratch/2024-11-11-reference-SHiELD-runs-links/slab-ocean-3xCO2-spin-up-C24-tuned-cdmbgwd-ic_0004
+  3xCO2-spin-up-ic_0005: /gpfs/f5/gfdl_w/scratch/Spencer.Clark/scratch/2024-11-11-reference-SHiELD-runs-links/slab-ocean-3xCO2-spin-up-C24-tuned-cdmbgwd-ic_0005
+  4xCO2-spin-up-ic_0001: /gpfs/f5/gfdl_w/scratch/Spencer.Clark/scratch/2024-11-11-reference-SHiELD-runs-links/slab-ocean-4xCO2-spin-up-C24-tuned-cdmbgwd-ic_0001
+  4xCO2-spin-up-ic_0002: /gpfs/f5/gfdl_w/scratch/Spencer.Clark/scratch/2024-11-11-reference-SHiELD-runs-links/slab-ocean-4xCO2-spin-up-C24-tuned-cdmbgwd-ic_0002
+  4xCO2-spin-up-ic_0003: /gpfs/f5/gfdl_w/scratch/Spencer.Clark/scratch/2024-11-11-reference-SHiELD-runs-links/slab-ocean-4xCO2-spin-up-C24-tuned-cdmbgwd-ic_0003
+  4xCO2-spin-up-ic_0004: /gpfs/f5/gfdl_w/scratch/Spencer.Clark/scratch/2024-11-11-reference-SHiELD-runs-links/slab-ocean-4xCO2-spin-up-C24-tuned-cdmbgwd-ic_0004
+  4xCO2-spin-up-ic_0005: /gpfs/f5/gfdl_w/scratch/Spencer.Clark/scratch/2024-11-11-reference-SHiELD-runs-links/slab-ocean-4xCO2-spin-up-C24-tuned-cdmbgwd-ic_0005
+  radiation-multi-call: /gpfs/f5/gfdl_w/scratch/Spencer.Clark/scratch/2024-10-21-reference-SHiELD-runs/slab-ocean-1xCO2-C24-tuned-cdmbgwd-radiation-multi-call
+
+# cubed_sphere_grid_data: a mapping from resolutions to paths to mosaic files
+# for cubed sphere grids.
+cubed_sphere_grid_data:
+  C24: /gpfs/f5/gfdl_w/scratch/Spencer.Clark/reference/SHiELD-SOM-input-data/input-data/data/grid_data/v1.2/C24/C24_mosaic.nc
+  C48: /gpfs/f5/gfdl_w/scratch/Spencer.Clark/reference/SHiELD-SOM-input-data/input-data/data/grid_data/v1.2/C48/C48_mosaic.nc
+  C96: /gpfs/f5/gfdl_w/scratch/Spencer.Clark/reference/SHiELD-SOM-input-data/input-data/data/grid_data/v1.2/C96/C96_mosaic.nc
+
+# target_grid_data: a mapping from target grid names (for use in wildcards) to
+# paths to mosaic files for output grids.
+target_grid_data:
+  gaussian_grid_45_by_90:
+    mosaic: /gpfs/f5/gfdl_w/scratch/Spencer.Clark/reference/SHiELD-SOM-input-data/regridding/gaussian_grid_45_by_90/gaussian_grid_45_by_90_mosaic.nc
+    chunks:
+      scalar:
+        time: -1
+      2D:
+        time: 2560
+      3D:
+        time: 256
+        pfull: 10
+
+# Number of ranks to partition combine jobs over
+# xpartition_ranks: 60
+xpartition_ranks: 10
+
+# Chunk sizes for opening the netCDF files initially
+initial_chunks:
+  time: 16
+
+# Configure the spherical harmonic transformation roundtrip
+spherical_harmonic_transform_filter:
+  filter_data: True
+  unfiltered_variables:
+  - land_sea_mask
+  - ocean_fraction
+  - land_fraction
+  - sea_ice_fraction
+  - column_soil_moisture
+  - soil_moisture_0
+  - soil_moisture_1
+  - soil_moisture_2
+  - soil_moisture_3
+  - soil_temperature_0
+  - soil_temperature_1
+  - soil_temperature_2
+  - soil_temperature_3
+  - snow_depth
+  - water_equivalent_snow_depth
+  - snow_cover_fraction
+  - sea_ice_concentration
+  - sea_ice_thickness
