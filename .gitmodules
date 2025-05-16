@@ -1,0 +1,21 @@
+[submodule "SHiELD-simulations/SHiELD/software/submodules/SHiELD_build"]
+	path = SHiELD-simulations/SHiELD/software/submodules/SHiELD_build
+	url = https://github.com/NOAA-GFDL/SHiELD_build.git
+[submodule "SHiELD-simulations/SHiELD/software/submodules/SHiELD_SRC/atmos_drivers"]
+	path = SHiELD-simulations/SHiELD/software/submodules/SHiELD_SRC/atmos_drivers
+	url = https://github.com/NOAA-GFDL/atmos_drivers.git
+[submodule "SHiELD-simulations/SHiELD/software/submodules/SHiELD_SRC/FMS"]
+	path = SHiELD-simulations/SHiELD/software/submodules/SHiELD_SRC/FMS
+	url = https://github.com/NOAA-GFDL/FMS.git
+[submodule "SHiELD-simulations/SHiELD/software/submodules/SHiELD_SRC/FMSCoupler"]
+	path = SHiELD-simulations/SHiELD/software/submodules/SHiELD_SRC/FMSCoupler
+	url = https://github.com/NOAA-GFDL/FMSCoupler.git
+[submodule "SHiELD-simulations/SHiELD/software/submodules/SHiELD_SRC/GFDL_atmos_cubed_sphere"]
+	path = SHiELD-simulations/SHiELD/software/submodules/SHiELD_SRC/GFDL_atmos_cubed_sphere
+	url = https://github.com/NOAA-GFDL/GFDL_atmos_cubed_sphere.git
+[submodule "SHiELD-simulations/SHiELD/software/submodules/SHiELD_SRC/SHiELD_physics"]
+	path = SHiELD-simulations/SHiELD/software/submodules/SHiELD_SRC/SHiELD_physics
+	url = https://github.com/NOAA-GFDL/SHiELD_physics.git
+[submodule "SHiELD-simulations/SHiELD/software/fv3net"]
+	path = SHiELD-simulations/SHiELD/software/fv3net
+	url = https://github.com/ai2cm/fv3net.git
