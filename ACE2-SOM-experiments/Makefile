@@ -1,4 +1,4 @@
-ENVIRONMENT_NAME=ace2-som-paper-manuscript
+ENVIRONMENT_NAME=ace2-som-paper-experiments
 BASE_ENVIRONMENT=base-environment.yaml
 UNCOMPILED_REQUIREMENTS=requirements.in
 COMPILED_REQUIREMENTS=requirements.txt
