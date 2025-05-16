@@ -1,0 +1,204 @@
+base_version: SHiELD/PIRE-like
+# Required for 4x 1997 CO2 and constant 1997 solar constant with slab ocean model
+forcing: /gpfs/f5/gfdl_w/scratch/Spencer.Clark/reference/SHiELD-SOM-input-data/input-data/data/base_forcing/SHiELD/v1.0-perpetual-4xCO2-1997-SOM/C24-tuned-cdmbgwd
+field_table: /gpfs/f5/gfdl_w/scratch/Spencer.Clark/reference/SHiELD-SOM-input-data/input-data/config/field_table/TKE-EDMF/v1.1/field_table  # Required for the TKE-EDMF scheme
+orographic_forcing: /gpfs/f5/gfdl_w/scratch/Spencer.Clark/reference/SHiELD-SOM-input-data/input-data/data/orographic_data/v1.2
+initial_conditions: PLACEHOLDER
+namelist:
+  atmos_model_nml:
+    fdiag: 6.0  # Required for outputting physics diagnostics every six hours
+    blocksize: 16  # Evenly distribute blocks with a 3x3 layout
+  coupler_nml:
+    calendar: gregorian
+    days: 0
+    hours: 0
+    minutes: 0
+    seconds: 0
+    months: 4
+    restart_secs: 86400
+    current_date:
+    - 2029
+    - 9
+    - 1
+    - 0
+    - 0
+    - 0
+  diag_manager_nml:
+    flush_nc_files: true
+    mix_snapshot_average_fields: true  # Harmonize time labels of interval average and snapshot diagnostics
+  fv_core_nml:
+    npx: 25
+    npy: 25
+    layout:  # Use 54 cores to speed wall clock time of simulation
+    - 3
+    - 3
+    k_split: 1
+    n_split: 6
+    kord_wz: 9  # There was a minor bug found in the PIRE codebase for kord_wz = -9, so Lucas recommends using kord_wz = 9
+    external_ic: false  # Required for starting from restart files
+    nggps_ic: false  # Required for starting from restart files
+    make_nh: false  # Required for starting from restart files
+    mountain: true  # Required for starting from restart files
+    warm_start: true  # Required for starting from restart files
+    na_init: 0  # Required for starting from restart files
+  fv_grid_nml:
+    grid_file: INPUT/grid_spec.nc  # Use a prescribed grid for most accurate regridding
+  gfs_physics_nml:
+    cdmbgwd:  # Roughly extrapolated based on recommendations from Jordan Alpert and Fanglin Yang
+    - 0.03125  # Reduce setting for mountain blocking to reduce T2m biases over land
+    - 0.25  # Retain X-SHiELD-like setting for gravity wave drag, since increasing it can lead to instability
+    disable_radiation_quasi_sea_ice: true  # Disable skin temperature dependent ocean albedo and emissivity
+    do_ocean: true  # Use the ocean model instead of climatological SSTs
+    fhlwr: 3600.0  # Use a radiation timestep of 3600 seconds
+    fhswr: 3600.0  # Use a radiation timestep of 3600 seconds
+    fhzero: 6.0  # Required for outputting physics diagnostics every six hours
+    ico2: 1  # Run with spatially uniform carbon dioxide concentration
+    ictm: 19970  # Required for perpetual 1997 carbon dioxide concentration
+    imfdeepcnv: 3  # Use most up-to-date deep convection scheme to ensure stability
+    imfshalcnv: 3  # Use shallow convection scheme version consistent with deep convection scheme
+  namsfc:
+    # Include paths to slab ocean model forcing data
+    fnmldc: grb/mld_DR003_c1m_reg2.0.grb  # From /gpfs/f5/gfdl_w/proj-shared/fvGFS_INPUT_DATA/climo_data.v201807/mld
+    fnqfluxc: grb/qfluxadj.grb  # Derived from 30 years of climSST data
+    ftsfl: 99999  # Prevent updating the surface temperature during cycling (let the physics driver handle it)
+    ftsfs: 99999  # Prevent updating the surface temperature during cycling (let the physics driver handle it)
+  ocean_nml:
+    ocean_option: SOM  # Use the slab ocean model instead of the mixed layer model
+    mld_option: obs  # Read in the mixed layer depth climatology from a file
+    use_qflux: true  # Read in the Q-flux climatology from a file
+    maxlat: 90  # Run with the slab ocean globally
+    start_lat: -90  # Run with the slab ocean globally
+    end_lat: 90  # Run with the slab ocean globally
+    # Override base config to default values for remaining parameters
+    do_mld_restore: false  # Not relevant for SOM
+    eps_day: 10.0  # Not relevant for SOM
+    gam: 0.14  # Not relevant for SOM
+    mld_obs_ratio: 1.0  # Leave observed MLD climatology unscaled
+    mld_restore_tscale: 1.0  # Not relevant for SOM
+    restore_method: 1  # Not relevant when running globally
+    sst_restore_tscale: 3.0  # Not relevant for SOM
+    stress_ratio: 1.0  # Not relveant for SOM
+    use_old_mlm: false  # Not relevant for SOM
+    use_rain_flux: false  # Do not consider temperature of rain in net surface flux
+diag_table:
+  base_time: 2000-01-01 00:00:00
+  name: full-model-emulation-training-data-run
+  file_configs:
+  - field_configs:
+    - {module_name: dynamics, field_name: temp, output_name: air_temperature}
+    - {module_name: dynamics, field_name: sphum, output_name: specific_humidity}
+    - {module_name: dynamics, field_name: ucomp, output_name: eastward_wind}
+    - {module_name: dynamics, field_name: vcomp, output_name: northward_wind}
+    - {module_name: dynamics, field_name: delp_total, output_name: pressure_thickness_of_atmospheric_layer}
+    - {module_name: dynamics, field_name: liq_wat, output_name: cloud_water_mixing_ratio}
+    - {module_name: dynamics, field_name: ice_wat, output_name: cloud_ice_mixing_ratio}
+    - {module_name: dynamics, field_name: rainwat, output_name: rain_mixing_ratio}
+    - {module_name: dynamics, field_name: snowwat, output_name: snow_mixing_ratio}
+    - {module_name: dynamics, field_name: graupel, output_name: graupel_mixing_ratio}
+    - {module_name: dynamics, field_name: o3mr, output_name: ozone_mixing_ratio}
+    - {module_name: gfs_sfc, field_name: SLMSKsfc, output_name: land_sea_mask}
+    - {module_name: gfs_sfc, field_name: ocean_fraction, output_name: ocean_fraction}
+    - {module_name: gfs_sfc, field_name: land_fraction, output_name: land_fraction}
+    - {module_name: gfs_sfc, field_name: sea_ice_fraction, output_name: sea_ice_fraction}
+    - {module_name: gfs_sfc, field_name: tsfc, output_name: surface_temperature}
+    - {module_name: gfs_sfc, field_name: t2m, output_name: air_temperature_at_two_meters}
+    - {module_name: gfs_sfc, field_name: q2m, output_name: specific_humidity_at_two_meters}
+    - {module_name: gfs_phys, field_name: u10m, output_name: eastward_wind_at_ten_meters}
+    - {module_name: gfs_phys, field_name: v10m, output_name: northward_wind_at_ten_meters}
+    - {module_name: dynamics, field_name: zsurf, output_name: HGTsfc}  # Not geopotential, but that's in restart files
+    - {module_name: gfs_phys, field_name: soilm, output_name: column_soil_moisture}
+    - {module_name: gfs_sfc, field_name: SOILW1, output_name: soil_moisture_0}
+    - {module_name: gfs_sfc, field_name: SOILW2, output_name: soil_moisture_1}
+    - {module_name: gfs_sfc, field_name: SOILW3, output_name: soil_moisture_2}
+    - {module_name: gfs_sfc, field_name: SOILW4, output_name: soil_moisture_3}
+    - {module_name: gfs_sfc, field_name: fice, output_name: sea_ice_concentration}
+    - {module_name: gfs_sfc, field_name: hice, output_name: sea_ice_thickness}
+    - {module_name: dynamics, field_name: ps, output_name: PRESsfc}
+    - {module_name: dynamics, field_name: slp, output_name: PRMSL}
+    - {module_name: dynamics, field_name: rh200, output_name: RH200}
+    - {module_name: dynamics, field_name: rh500, output_name: RH500}
+    - {module_name: dynamics, field_name: rh850, output_name: RH850}
+    - {module_name: dynamics, field_name: t200, output_name: TMP200}
+    - {module_name: dynamics, field_name: t500, output_name: TMP500}
+    - {module_name: dynamics, field_name: t850, output_name: TMP850}
+    - {module_name: dynamics, field_name: u200, output_name: UGRD200}
+    - {module_name: dynamics, field_name: u500, output_name: UGRD500}
+    - {module_name: dynamics, field_name: u850, output_name: UGRD850}
+    - {module_name: dynamics, field_name: u1000, output_name: UGRD1000}
+    - {module_name: dynamics, field_name: v200, output_name: VGRD200}
+    - {module_name: dynamics, field_name: v500, output_name: VGRD500}
+    - {module_name: dynamics, field_name: v850, output_name: VGRD850}
+    - {module_name: dynamics, field_name: v1000, output_name: VGRD1000}
+    - {module_name: dynamics, field_name: z50, output_name: h50}
+    - {module_name: dynamics, field_name: z200, output_name: h200}
+    - {module_name: dynamics, field_name: z250, output_name: h250}
+    - {module_name: dynamics, field_name: z300, output_name: h300}
+    - {module_name: dynamics, field_name: z500, output_name: h500}
+    - {module_name: dynamics, field_name: z700, output_name: h700}
+    - {module_name: dynamics, field_name: z850, output_name: h850}
+    - {module_name: dynamics, field_name: z1000, output_name: h1000}
+    - {module_name: gfs_sfc, field_name: SOILT1, output_name: soil_temperature_0}
+    - {module_name: gfs_sfc, field_name: SOILT2, output_name: soil_temperature_1}
+    - {module_name: gfs_sfc, field_name: SOILT3, output_name: soil_temperature_2}
+    - {module_name: gfs_sfc, field_name: SOILT4, output_name: soil_temperature_3}
+    - {module_name: gfs_sfc, field_name: snowd, output_name: snow_depth}
+    - {module_name: gfs_sfc, field_name: weasd, output_name: water_equivalent_snow_depth}
+    - {module_name: gfs_sfc, field_name: snow_cover, output_name: snow_cover_fraction}
+    name: full_state
+    frequency: 6
+    frequency_units: hours
+    time_axis_name: time
+    time_axis_units: hours
+  - field_configs:
+    - {module_name: dynamics, field_name: grid_latt, output_name: lat}
+    - {module_name: dynamics, field_name: grid_lont, output_name: lon}
+    - {module_name: dynamics, field_name: grid_lat, output_name: latb}
+    - {module_name: dynamics, field_name: grid_lon, output_name: lonb}
+    - {module_name: gfs_phys, field_name: DSWRF, output_name: DSWRFsfc}
+    - {module_name: gfs_phys, field_name: DLWRF, output_name: DLWRFsfc}
+    - {module_name: gfs_phys, field_name: USWRF, output_name: USWRFsfc}
+    - {module_name: gfs_phys, field_name: ULWRF, output_name: ULWRFsfc}
+    - {module_name: gfs_phys, field_name: DSWRFtoa, output_name: DSWRFtoa}
+    - {module_name: gfs_phys, field_name: USWRFtoa, output_name: USWRFtoa}
+    - {module_name: gfs_phys, field_name: ULWRFtoa, output_name: ULWRFtoa}
+    - {module_name: gfs_phys, field_name: lhtfl_ave, output_name: LHTFLsfc}
+    - {module_name: gfs_phys, field_name: shtfl_ave, output_name: SHTFLsfc}
+    - {module_name: gfs_phys, field_name: totprcpb_ave, output_name: PRATEsfc}
+    - {module_name: gfs_phys, field_name: toticeb_ave, output_name: ICEsfc}
+    - {module_name: gfs_phys, field_name: totsnwb_ave, output_name: SNOWsfc}
+    - {module_name: gfs_phys, field_name: totgrpb_ave, output_name: GRAUPELsfc}
+    - {module_name: dynamics, field_name: tq, output_name: precipitable_water_path}
+    - {module_name: dynamics, field_name: iw, output_name: ice_water_path}
+    - {module_name: dynamics, field_name: lw, output_name: liquid_water_path}
+    - {module_name: dynamics, field_name: te, output_name: total_energy}
+    - {module_name: gfs_phys, field_name: dusfc, output_name: eastward_surface_wind_stress}
+    - {module_name: gfs_phys, field_name: dvsfc, output_name: northward_surface_wind_stress}
+    - {module_name: gfs_phys, field_name: gflux_ave, output_name: GHTFLsfc}
+    name: fluxes_2d
+    frequency: 6
+    frequency_units: hours
+    time_axis_name: time
+    time_axis_units: hours
+  - field_configs:
+    - {module_name: gfs_phys, field_name: prescribed_mixed_layer_depth, output_name: prescribed_mixed_layer_depth, reduction_method: average}
+    - {module_name: gfs_phys, field_name: prescribed_qflux, output_name: prescribed_qflux, reduction_method: average}
+    name: ocean_forcing
+    frequency: 6
+    frequency_units: hours
+    time_axis_name: time
+    time_axis_units: hours
+  - field_configs:
+    - {module_name: dynamics, field_name: t_dt_diabatic, output_name: temperature_tendency_due_to_diabatic_processes, reduction_method: average}
+    - {module_name: dynamics, field_name: qv_dt_diabatic, output_name: specific_humidity_tendency_due_to_diabatic_processes, reduction_method: average}
+    name: tendencies_3d
+    frequency: 6
+    frequency_units: hours
+    time_axis_name: time
+    time_axis_units: hours
+  - field_configs:
+    - {module_name: gfs_phys, field_name: global_mean_co2, output_name: global_mean_co2}
+    name: scalar
+    frequency: 6
+    frequency_units: hours
+    time_axis_name: time
+    time_axis_units: hours

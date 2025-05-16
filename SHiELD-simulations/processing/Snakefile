@@ -1,0 +1,69 @@
+# configfile: "config/config-C24.yaml"
+configfile: "config/config-C96.yaml"
+
+include: "rules/common.smk"
+include: "rules/archive.smk"
+include: "rules/regrid.smk"
+include: "rules/kerchunk.smk"
+include: "rules/zarr.smk"
+include: "rules/transfer.smk"
+
+
+rule archive:
+    input:
+        rules.archive_diagnostics_file_all.input,
+        rules.archive_restart_directory_all.input,
+        rules.archive_ascii_directory_all.input
+
+
+rule regrid:
+    input:
+        [
+            expand(
+                rules.regrid_tape.output,
+                run=run,
+                segment=SEGMENTS[run],
+                tape=TAPES[run],
+                target_grid=TARGET_GRIDS
+            )
+        for run in RUNS]
+
+
+rule zarr:
+    input:
+        [
+            expand(
+                rules.zarr_regridded_tape.output,
+                run=run,
+                tape=TAPES[run],
+                target_grid=TARGET_GRIDS
+            )
+        for run in RUNS],
+        [
+            expand(
+                rules.zarr_scalar_tape.output,
+                run=run,
+                scalar_tape=SCALAR_TAPES[run],
+                target_grid=TARGET_GRIDS
+            )
+        for run in RUNS]
+
+
+rule transfer:
+    input:
+        [
+            expand(
+                rules.transfer_tape.output,
+                run=run,
+                tape=TAPES[run],
+                target_grid=TARGET_GRIDS
+            )
+        for run in RUNS],
+        [
+            expand(
+                rules.transfer_scalar_tape.output,
+                run=run,
+                scalar_tape=SCALAR_TAPES[run],
+                target_grid=TARGET_GRIDS
+            )
+        for run in RUNS]

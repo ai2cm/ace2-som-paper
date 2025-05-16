@@ -1,0 +1,5 @@
+black
+cftime
+pytest
+xarray
+fv3kube @ git+https://github.com/ai2cm/fv3net.git@68e4f378e933a9d90af9268a4f330cd6fc308e7d#egg=fv3kube&subdirectory=external/fv3kube
